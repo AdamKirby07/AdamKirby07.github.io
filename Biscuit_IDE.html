@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biscuit IDE</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #container {
+      display: flex;
+      justify-content: space-between;
+      height: 100vh;
+      padding: 10px;
+    }
+
+    #setup-loop-container {
+      display: flex;
+      flex-direction: column;
+      width: 60%;
+      margin-right: 10px;
+      position: relative;
+    }
+
+    .section {
+      flex-grow: 1;
+      min-height: 300px;
+      border: 2px solid black;
+      padding: 10px;
+      background-color: #f0f0f0;
+      margin-bottom: 10px;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .section h3 {
+      text-align: center;
+    }
+
+    #bits-container {
+      width: 30%;
+      height: 100%;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 2px solid #ddd;
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+
+    #board-select-container {
+      width: 30%;
+      padding: 10px;
+      border: 2px solid #ddd;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    .block {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: grab;
+      position: relative;
+      width: 90%;
+    }
+
+    .block:active {
+      cursor: grabbing;
+    }
+
+    .dropdown {
+      padding: 5px;
+      margin: 5px;
+    }
+
+    .pin-dropdown {
+      margin-top: 5px;
+      width: 100px;
+    }
+
+    .configuration-title {
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <div id="setup-loop-container">
+      <!-- Setup Section -->
+      <div id="setup" class="section">
+        <h3>Setup</h3>
+      </div>
+      <!-- Loop Section -->
+      <div id="loop" class="section">
+        <h3>Loop</h3>
+      </div>
+    </div>
+
+    <div id="bits-container">
+      <h3>Blocks</h3>
+      <div class="block" draggable="true" ondragstart="drag(event)" id="block1">
+        Set Pin
+        <select class="pin-dropdown" onchange="updatePinInBlock(event, 'block1')">
+          <!-- Pin options dynamically updated -->
+        </select>
+        Output
+      </div>
+      <div class="block" draggable="true" ondragstart="drag(event)" id="block2">
+        Digital Write
+        <select class="pin-dropdown" onchange="updatePinInBlock(event, 'block2')">
+          <!-- Pin options dynamically updated -->
+        </select>
+        HIGH
+      </div>
+      <div class="block" draggable="true" ondragstart="drag(event)" id="block3">
+        Digital Write
+        <select class="pin-dropdown" onchange="updatePinInBlock(event, 'block3')">
+          <!-- Pin options dynamically updated -->
+        </select>
+        LOW
+      </div>
+    </div>
+
+    <div id="board-select-container">
+      <div class="configuration-title">Configuration</div>
+      <select id="board-dropdown" class="dropdown" onchange="updatePinOptions()">
+        <option>Select Board</option>
+      </select>
+    </div>
+  </div>
+
+  <script>
+    let draggedBlock = null;
+    let boardConfig = {};
+
+    // Load board config from relative JSON path
+    fetch('./boardConfig.json') // relative path
+      .then(response => response.json())
+      .then(data => {
+        boardConfig = data;
+        const boardDropdown = document.getElementById('board-dropdown');
+        data.boards.forEach(board => {
+          const option = document.createElement('option');
+          option.text = board.name;
+          option.value = board.name;
+          boardDropdown.appendChild(option);
+        });
+
+        // Default selection
+        boardDropdown.value = "Arduino Uno";
+        updatePinOptions();
+      });
+
+    // Update pin options dynamically based on the selected board
+    function updatePinOptions() {
+      const boardName = document.getElementById('board-dropdown').value;
+      const selectedBoard = boardConfig.boards.find(board => board.name === boardName);
+
+      const pinDropdowns = document.querySelectorAll('.pin-dropdown');
+      pinDropdowns.forEach(dropdown => {
+        dropdown.innerHTML = '';  // Clear existing options
+        dropdown.appendChild(new Option('Select Pin', ''));
+        selectedBoard.pins.forEach(pin => {
+          const option = new Option(pin, pin);
+          dropdown.appendChild(option);
+        });
+      });
+    }
+
+    // Update the pin inside the block
+    function updatePinInBlock(event, blockId) {
+      const block = document.getElementById(blockId);
+      const selectedPin = event.target.value;
+      const pinSelectSpan = block.querySelector('.pin-select');
+      pinSelectSpan.textContent = selectedPin;
+    }
+
+    function drag(event) {
+      draggedBlock = event.target;
+      event.dataTransfer.setData("text", event.target.id);
+    }
+
+    const sections = document.querySelectorAll('.section');
+    const gridSize = 50;  // Grid size for snapping
+
+    sections.forEach(section => {
+      section.addEventListener("dragover", function(event) {
+        event.preventDefault();
+      });
+
+      section.addEventListener("drop", function(event) {
+        event.preventDefault();
+        const blockId = event.dataTransfer.getData("text");
+        const block = document.getElementById(blockId);
+
+        // Get the section's position to snap the block accordingly
+        const rect = section.getBoundingClientRect();
+        let yOffset = Math.floor((event.clientY - rect.top) / gridSize) * gridSize;
+        yOffset = Math.max(0, yOffset); // Ensure the block doesn't go out of bounds
+
+        // Check for vertical snapping
+        const existingBlocks = Array.from(section.children);
+        const closestBlock = existingBlocks.reduce((closest, currentBlock) => {
+          const blockRect = currentBlock.getBoundingClientRect();
+          const diff = Math.abs(blockRect.top - event.clientY);
+          return (diff < Math.abs(closest.top - event.clientY)) ? currentBlock : closest;
+        }, { top: Number.MAX_VALUE });
+
+        // Snap to nearest block position
+        if (closestBlock) {
+          const closestRect = closestBlock.getBoundingClientRect();
+          yOffset = closestRect.bottom + gridSize;  // Place the block below the nearest one
+        }
+
+        block.style.position = 'absolute';
+        block.style.left = '10px'; // Always snap to the left
+        block.style.top = rect.top + yOffset + 'px';
+
+        // Add block to the section (stack vertically)
+        section.appendChild(block);
+      });
+    });
+  </script>
+</body>
+</html>
+
