@@ -2,90 +2,24 @@
 <html>
 
 <head>
-
-
-    <title>How to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE - Pre-release Tutorial</title>
-    <meta name="description" content="Learn how to use the BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE in this step-by-step tutorial. Perfect for electronics enthusiasts, with clear instructions and code samples.">
-    <meta name="robots" content="index, follow">
-    <meta property="og:title" content="How to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE - Tutorial">
-    <meta property="og:description" content="This tutorial teaches you how to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE. Includes code, configurations, and step-by-step instructions.">
-    <meta property="og:image" content="BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE.png">
-    <meta property="og:url" content="https://yourwebsite.com/tutorials.html">
-    <meta property="og:type" content="article">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="How to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE - Tutorial">
-    <meta name="twitter:description" content="A detailed tutorial on using BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE, featuring code, configurations, and easy-to-follow instructions.">
-    <meta name="twitter:image" content="BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE.png">
-    <link rel="canonical" href="https://yourwebsite.com/tutorials.html">
-    <meta property="og:image:alt" content="BISCUIT MCU™ and BISCUIT MCU MINI™ tutorial image">
-    <meta name="author" content="Adam Kirby">
-    <meta name="keywords" content="electronics tutorial, BISCUIT MCU, MPLAB IDE, electronics for beginners, microcontroller tutorial, electronics tutorial online, DIY electronics">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Article",
-      "headline": "How to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE",
-      "description": "Step-by-step tutorial on using BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE. Includes example code, configurations, and easy-to-follow instructions.",
-      "image": "BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE.png",
-      "author": {
-        "@type": "Person",
-        "name": "Adam Kirby"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "AMC Avion",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://yourwebsite.com/logo.png"
-        }
-      },
-      "datePublished": "2025-01-16",
-      "dateModified": "2025-01-16"
-    }
-
-
-
     <title>Adam Kirby</title>
-    <style>
-        body {
-            background-color: black;
-            color: white;
-            margin: 0;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Explore electronics tutorials, DIY projects, and product guides by Adam Kirby. Learn and create with practical resources for electronics enthusiasts.">
+    <meta name="keywords" content="electronics, tutorials, DIY electronics, projects, guides, Adam Kirby, electronics tutorials, electronics resources">
+    <meta name="author" content="Adam Kirby">
 
-        .sidebar {
-            width: 200px;
-            background-color: #222;
-            color: white;
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            padding: 10px;
-        }
-
-        .content {
-            margin-left: 220px;
-            padding: 20px;
-        }
-
-        a   {
-            color:white;
-            text-decoration: none;
-        }
-
-        a:visited {
-            color: white;
-        }
-
-        a:hover {
-            color:grey;
-        }
-
-        a:active {
-            coloe:white;
-        }
-    </style>
+    <!-- Open Graph Meta Tags for Social Media -->
+    <meta property="og:title" content="Electronics Tutorials by Adam Kirby">
+    <meta property="og:description" content="Discover electronics tutorials, projects, and resources by Adam Kirby. Learn and build with hands-on guides and practical examples.">
+    <meta property="og:url" content="https://adamkirby.online">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:title" content="Electronics Tutorials by Adam Kirby">
+    <meta name="twitter:description" content="Explore electronics tutorials, projects, and guides created by Adam Kirby.">
+    <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body>
@@ -93,7 +27,7 @@
         <h1>Adam Kirby</h1>
         <hr />
         <p><br /> </p>
-        <a href="adamkirby.online">Home</a>
+        <a href="https://adamkirby.online">Home</a>
         <br />
         <a href="tutorials.html">Tutorials</a>
         <br />
@@ -107,43 +41,41 @@
         <br />
         <p>Discord<br /> </p>
         <br />
-
-
     </div>
 
     <div class="content">
-        <h1>How to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE - pre release tutorial</h1>
+        <h1>How to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE - Pre-release Tutorial</h1>
         <hr />
-        <p>This tutorial will teach you how to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE</p>
+        <p>This tutorial will teach you how to use BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE, a great resource for anyone learning about microcontroller programming.</p>
         <hr />
         <h2>Prerequisites:</h2>
-        <p>- MPLAB (from microchip)</p>
-        <p>- XC8 Compiler (from microchip)</p>
+        <p>- MPLAB (from Microchip)</p>
+        <p>- XC8 Compiler (from Microchip)</p>
         <br/>
-        <p>Please ensure that these have been installed before the next steps :).</p>
+        <p>Please ensure that these have been installed before proceeding with the next steps. :)</p>
         <hr />
         <h2>Code Offset:</h2>
         <p>A code offset of 0x1000 should be applied.</p>
         <br/>
         <p>This can be done by:</p>
-        <p>- Right clicking the project name and selecting properties.</p>
-        <p>- Select XC8 linker under XC8 global options.</p>
-        <p>- In option catagorys select aditional options and enter the code offset of 0x1000.</p>
-        <p>- Click apply then OK.</p>
-        <img src="BISCUIT MCU™ and BISCUIT MCU MINI™ with MPLAB IDE.png" alt="Screenshot of applying the code offset in ">
+        <ul>
+            <li>Right-click the project name and select properties.</li>
+            <li>Select the XC8 linker under XC8 global options.</li>
+            <li>In the options category, select additional options and enter the code offset of 0x1000.</li>
+            <li>Click apply, then OK.</li>
+        </ul>
+        <img src="BISCUIT_MCU_and_BISCUIT_MCU_MINI_with_MPLAB_IDE.png" alt="Screenshot of applying the code offset in MPLAB IDE">
         <hr />
         <h2>Pin Assignments:</h2>
-        <p>I would reccomend asigning the BISCUIT MCU™ name of each pin in MPLAB to make things easier.</p>
+        <p>I recommend assigning the BISCUIT MCU™ name of each pin in MPLAB to make things easier.</p>
         <br/>
         <p>MPLAB C code:<br>#define 1 RA5<br>#define 2 RA4<br>#define 3 RC5<br>#define 4 RC4<br>#define 5 RC3<br>#define 6 RC2<br>#define 7 RC1<br>#define 8 RC0</p>
         <hr />
         <h2>Configuration:</h2>
-        <p>This will be updated for release version testing underway.</p>
-        <br/>
+        <p>This will be updated for the release version. Testing is underway, and improvements will be made soon.</p>
         <br/>
         <hr />
-        <br/>
-        <p>Check out my products here:</p>
+        <p>Check out my products and more resources:</p>
         <a href="https://www.tindie.com/stores/aks/?ref=offsite_badges&utm_source=sellers_AKS&utm_medium=badges&utm_campaign=badge_small">
             <img src="https://d2ss6ovg47m0r5.cloudfront.net/badges/tindie-smalls.png" alt="I sell on Tindie" width="200" height="55">
         </a>
